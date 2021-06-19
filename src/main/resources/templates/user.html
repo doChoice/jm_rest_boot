@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" >
+        <title>Admin panel</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+
+    <body>
+        <header class="header">
+            <div class="container-fluid bg-dark">
+                <div class="row justify-content-between">
+                    <div class="col-md-11 text-white py-2">
+                        <!------------------------admin.js addRolesToForms------------------------->
+                        <span class="font-weight-bold" id="userNameForHeader"></span>
+                        <span class="text" id="userRolesForHeader"></span>
+                    </div>
+                    <div class="col-md-1 text-right">
+                        <a class="nav-link text-secondary pr-0" href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="container-fluid d-flex flex-column vh-100">
+                <div class="row flex-grow-1">
+                    <aside class="col-md-2 px-0 pt-3">
+                        <ul class="nav nav-pills flex-column " role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active"
+                                   data-toggle="pill"
+                                   href="#userCard" role="tab"
+                                   aria-controls="user"
+                                   aria-selected="true">User</a>
+                            </li>
+                        </ul>
+                    </aside>
+
+                    <div class="col-md-10 pt-3 px-4 bg-light" >
+                        <div class="tab-content">
+                            <!--User information-page-->
+                            <div class="tab-pane active" id="userCard" role="tabpanel" aria-labelledby="user-tab">
+                                <h1>User information-page</h1>
+
+                                <div class="card my-3">
+                                    <div class="card-header">
+                                        <h3>About user</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-striped" id="tableUser">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Age</th>
+                                                    <th>Email</th>
+                                                    <th>Role</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            <!------admin.js getUser------->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script th:src="user.js"></script>
+    </body>
+
+</html>
