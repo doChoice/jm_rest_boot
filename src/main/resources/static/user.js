@@ -11,8 +11,7 @@ function getUser() {
         })
         .then((authorizedUser) => {
             let tableRows = '';
-            let rolesAuthorizedUser = '';
-            rolesAuthorizedUser = userRolesForPrint(authorizedUser.roles);
+            let rolesAuthorizedUser = userRolesForPrint(authorizedUser.roles);
             tableRows += '<tr>' +
                 '<td>' + authorizedUser.id + '</td>' +
                 '<td>' + authorizedUser.firstName + '</td>' +
@@ -30,7 +29,7 @@ function getUser() {
 function userRolesForPrint(roles) {
     let rolesForPrint = '';
     $.each(roles, function (key, value) {
-        rolesForPrint += value.roleName;
+        rolesForPrint += (value.roleName + ' ');
     })
-    return rolesForPrint.replaceAll('ROLE_', ' ');
+    return rolesForPrint;
 }

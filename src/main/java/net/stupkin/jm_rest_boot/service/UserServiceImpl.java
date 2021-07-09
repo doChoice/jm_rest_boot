@@ -1,68 +1,63 @@
 package net.stupkin.jm_rest_boot.service;
 
-import net.stupkin.jm_rest_boot.dao.UserDAO;
+import net.stupkin.jm_rest_boot.dao.RoleRepository;
+import net.stupkin.jm_rest_boot.dao.UserRepository;
 import net.stupkin.jm_rest_boot.entity.Role;
 import net.stupkin.jm_rest_boot.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
-    private final UserDAO userDAO;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+        return userRepository.findAll();
     }
 
     @Override
     public void saveUser(User user) {
-        userDAO.saveUser(user);
+        userRepository.save(user);
     }
 
     @Override
     public void updateUser(User user) {
-        userDAO.updateUser(user);
+        userRepository.save(user);
     }
 
     @Override
     public User getUserById(Long id) {
-        return userDAO.getUserById(id);
+        return userRepository.getById(id);
     }
 
     @Override
     public void deleteUser(Long id) {
-        userDAO.deleteUser(id);
+        userRepository.deleteById(id);
     }
 
     @Override
     public User getUserByUsername(String userName) {
-        return userDAO.getUserByEmail(userName);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        return getUserByUsername(userName);
+        return userRepository.findUserByEmail(userName);
     }
 
     @Override
     public Role getRoleById(Long id) {
-        return userDAO.getRoleById(id);
+        return roleRepository.getById(id);
     }
 
     @Override
     public List<Role> getAllRoles() {
-        return userDAO.getAllRoles();
+        return roleRepository.findAll();
     }
 }

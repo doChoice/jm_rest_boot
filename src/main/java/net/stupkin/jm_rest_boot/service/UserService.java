@@ -3,11 +3,10 @@ package net.stupkin.jm_rest_boot.service;
 
 import net.stupkin.jm_rest_boot.entity.Role;
 import net.stupkin.jm_rest_boot.entity.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
     List<User> getAllUsers();
     void saveUser(User user);
     void updateUser(User user);

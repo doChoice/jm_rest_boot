@@ -1,7 +1,7 @@
 package net.stupkin.jm_rest_boot.configs;
 
 import net.stupkin.jm_rest_boot.configs.handler.LoginSuccessHandler;
-import net.stupkin.jm_rest_boot.service.UserService;
+import net.stupkin.jm_rest_boot.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,12 +17,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final LoginSuccessHandler successHandler;
 
     @Autowired
-    public SecurityConfig(UserService userService, LoginSuccessHandler successHandler) {
-        this.userService = userService;
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService, LoginSuccessHandler successHandler) {
+        this.userDetailsService = userDetailsService;
         this.successHandler = successHandler;
     }
 
@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth
-                .userDetailsService(userService)
+                .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
@@ -43,25 +43,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .formLogin()
-                .loginPage("/")
-                .successHandler(successHandler)
-                .loginProcessingUrl("/")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .permitAll()
-                .and()
+                    .loginPage("/")
+                    .successHandler(successHandler)
+                    .loginProcessingUrl("/")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .permitAll()
+                    .and()
                 .logout()
-                .permitAll()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/?logout")
-                .and().csrf().disable()
+                    .permitAll()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/")
+                    .and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user").hasRole("USER")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/").anonymous();
-
-
-
-
+                    .antMatchers("/user").hasRole("USER")
+                    .antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/").anonymous();
     }
 }

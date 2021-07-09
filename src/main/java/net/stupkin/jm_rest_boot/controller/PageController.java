@@ -17,6 +17,7 @@ public class PageController {
     public String adminPage() {
         return "admin";
     }
+
     @GetMapping("/user")
     public String userPage() {
         return "user";
